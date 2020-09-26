@@ -7,7 +7,7 @@
     "start:dev": "nodemon --exec babel-node server/index.js",
     "build": "babel -d dist server/",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "heroku-prebuild": "rm -rf node_modules && npm i @babel/cli @babel/core @babel/node"
+    "heroku-prebuild": "rm -rf node_modules && npm i @babel/cli @babel/core"
   },
   "dependencies": {
     "@babel/runtime": "^7.11.2",

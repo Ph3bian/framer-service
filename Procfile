@@ -1,1 +1,1 @@
-web: ENV_SILENT=true npm i @babel/cli @babel/core @babel/node && npm run build && npm run start
+web: ENV_SILENT=true npm i -g @babel/cli @babel/core @babel/node && npm run build && npm run start
