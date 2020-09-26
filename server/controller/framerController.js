@@ -1,4 +1,6 @@
-const mediumUrl = "https://medium.com/feed";
+import mergeImages from "merge-images";
+import fs from "fs";
+const { Canvas, Image } = require("canvas");
 
 export default class FramerController {
   /**
@@ -12,10 +14,23 @@ export default class FramerController {
       if (!image) {
         throw new Error();
       }
-      return res.status(200).json({
-        data,
-        status: 200,
-        success: true,
+
+      fs.readFile(__dirname + "/gold-frame.png", (err, data) => {
+        if (err) throw new Error();
+        mergeImages([data, image], {
+          Canvas: Canvas,
+          Image: Image,
+        })
+          .then((response) =>
+            res.status(200).json({
+              data: response,
+              status: 200,
+              success: true,
+            })
+          )
+          .catch(() => {
+            throw new Error();
+          });
       });
     } catch (error) {
       return res.status(500).json({
