@@ -3,7 +3,7 @@ import ErrorHandler from "../middleware/errorHandler";
 import FramerController from "../controller/framerController";
 const router = new Router();
 
-router.get("/upload", FramerController.generateFrame);
+router.post("/upload", FramerController.generateFrame);
 
 router.use(ErrorHandler);
 
