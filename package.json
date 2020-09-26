@@ -7,10 +7,12 @@
     "start:dev": "nodemon --exec babel-node server/index.js",
     "build": "babel -d dist server/",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "heroku-prebuild": "rm -rf node_modules && npm i @babel/cli @babel/core"
+    "heroku-prebuild": "rm -rf node_modules"
   },
   "dependencies": {
     "@babel/runtime": "^7.11.2",
+    "@babel/preset-env": "^7.11.5",
+    "@babel/register": "^7.11.5",
     "body-parser": "^1.19.0",
     "canvas": "^2.6.1",
     "cookie-parser": "~1.4.4",
