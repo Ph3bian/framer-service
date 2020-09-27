@@ -1,6 +1,6 @@
 import mergeImages from "merge-images";
 import fs from "fs";
-const { Canvas, Image } = require("canvas");
+import { Canvas, Image, createCanvas } from "canvas";
 
 export default class FramerController {
   /**
@@ -11,27 +11,40 @@ export default class FramerController {
   static async generateFrame(req, res) {
     try {
       const { image } = req.body;
-      if (!image) {
-        throw new Error();
-      }
+      if (!image) throw new Error();
+      const CanvasImage = Image;
+      const canvas = createCanvas(700, 500);
+      const ctx = canvas.getContext("2d");
 
-      fs.readFile(__dirname + "/gold-frame.png", (err, data) => {
-        if (err) throw new Error();
-        mergeImages([data, image], {
-          Canvas: Canvas,
-          Image: Image,
-        })
-          .then((response) =>
-            res.status(200).json({
-              data: response,
-              status: 200,
-              success: true,
-            })
-          )
-          .catch(() => {
-            throw new Error();
-          });
-      });
+      const img = new CanvasImage();
+
+      img.onload = function () {
+        ctx.drawImage(img, 53, 90, 600, 450);
+        var imageData = canvas.toDataURL();
+        fs.readFile("assets/images/gold-frame.png", async (err, data) => {
+          if (err) throw new Error();
+          mergeImages([data, imageData], {
+            Canvas,
+            Image,
+          })
+            .then((response) =>
+              res.status(200).json({
+                data: response,
+                status: 200,
+                success: true,
+              })
+            )
+            .catch(() => {
+              throw new Error();
+            });
+        });
+      };
+
+      img.onerror = (err) => {
+        throw err;
+      };
+
+      img.src = image;
     } catch (error) {
       return res.status(500).json({
         status: 500,
